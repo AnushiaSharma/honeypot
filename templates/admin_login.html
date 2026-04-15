@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Access</title>
+
+    <style>
+        body {
+            background: black;
+            color: #00ff00;
+            font-family: "Courier New", monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .box {
+            border: 1px solid #00ff00;
+            padding: 25px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 0 15px #00ff00;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            background: black;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+        }
+
+        button {
+            width: 100%;
+            padding: 8px;
+            background: #00ff00;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #00cc00;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>ADMIN ACCESS</h2>
+
+    <form method="POST">
+        <input name="username" placeholder="Username" required>
+        <input name="password" type="password" placeholder="Password" required>
+
+        <button type="submit">LOGIN</button>
+    </form>
+</div>
+
+</body>
+</html>

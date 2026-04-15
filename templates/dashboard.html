@@ -1,29 +1,110 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Honeypot Dashboard</title>
-</head>
-<body>
-    <h2>Attack Logs</h2>
+    <title>Matrix Honeypot Dashboard</title>
 
-    <table border="1">
+    <style>
+        body {
+            background: black;
+            color: #00ff00;
+            font-family: "Courier New", monospace;
+            margin: 0;
+        }
+
+        header {
+            text-align: center;
+            padding: 15px;
+            font-size: 22px;
+            border-bottom: 1px solid #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #003300;
+        }
+
+        th {
+            color: #00ff00;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        tr:hover {
+            background-color: rgba(0, 255, 0, 0.1);
+        }
+
+        .ip {
+            color: #00ffcc;
+        }
+
+        .attack {
+            color: red;
+            text-shadow: 0 0 8px red;
+        }
+
+        .blink {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .terminal {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    💻 MATRIX HONEYPOT TERMINAL
+    <div style="text-align:right; padding:10px;">
+    <a href="/logout" style="color:red; text-decoration:none;">[ LOGOUT ]</a>
+</div>
+</header>
+
+<div class="container">
+
+    <div class="terminal">
+        > Initializing system... <br>
+        > Monitoring incoming threats... <br>
+        > Status: <span class="blink">ACTIVE</span>
+    </div>
+
+    <table>
         <tr>
             <th>ID</th>
-            <th>IP Address</th>
-            <th>Username</th>
-            <th>Password</th>
-            <th>Time</th>
+            <th>IP</th>
+            <th>USERNAME</th>
+            <th>PASSWORD</th>
+            <th>TIME</th>
+            <th>STATUS</th>
         </tr>
 
         {% for row in data %}
         <tr>
             <td>{{ row[0] }}</td>
-            <td>{{ row[1] }}</td>
+            <td class="ip">{{ row[1] }}</td>
             <td>{{ row[2] }}</td>
             <td>{{ row[3] }}</td>
             <td>{{ row[4] }}</td>
+            <td class="attack">⚠ BREACH</td>
         </tr>
         {% endfor %}
     </table>
+
+</div>
+
 </body>
 </html>

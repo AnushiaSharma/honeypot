@@ -95,3 +95,94 @@ NameError: name 'password' is not defined. Did you mean: 'passowrd'?
 2026-04-14 23:02:31,787 - [33mPress CTRL+C to quit[0m
 2026-04-14 23:03:00,925 - 127.0.0.1 - - [14/Apr/2026 23:03:00] "POST / HTTP/1.1" 200 -
 2026-04-14 23:03:16,132 - 127.0.0.1 - - [14/Apr/2026 23:03:16] "GET /dashboard HTTP/1.1" 200 -
+2026-04-15 17:06:50,335 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.22:8080
+2026-04-15 17:06:50,336 - [33mPress CTRL+C to quit[0m
+2026-04-15 17:07:00,367 - 127.0.0.1 - - [15/Apr/2026 17:07:00] "GET /dashboard HTTP/1.1" 200 -
+2026-04-15 17:07:00,464 - 127.0.0.1 - - [15/Apr/2026 17:07:00] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-04-15 17:08:17,884 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.22:8080
+2026-04-15 17:08:17,884 - [33mPress CTRL+C to quit[0m
+2026-04-15 17:08:23,298 - 127.0.0.1 - - [15/Apr/2026 17:08:23] "GET /dashboard HTTP/1.1" 200 -
+2026-04-15 17:23:38,588 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.22:8080
+2026-04-15 17:23:38,589 - [33mPress CTRL+C to quit[0m
+2026-04-15 17:23:43,704 - 127.0.0.1 - - [15/Apr/2026 17:23:43] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2026-04-15 17:23:43,954 - 127.0.0.1 - - [15/Apr/2026 17:23:43] "GET /admin HTTP/1.1" 200 -
+2026-04-15 17:24:29,749 - 127.0.0.1 - - [15/Apr/2026 17:24:29] "POST /admin HTTP/1.1" 200 -
+2026-04-15 17:24:32,530 - 127.0.0.1 - - [15/Apr/2026 17:24:32] "GET /admin HTTP/1.1" 200 -
+2026-04-15 17:24:43,353 - 127.0.0.1 - - [15/Apr/2026 17:24:43] "[32mPOST /admin HTTP/1.1[0m" 302 -
+2026-04-15 17:24:43,655 - 127.0.0.1 - - [15/Apr/2026 17:24:43] "GET /dashboard HTTP/1.1" 200 -
+2026-04-15 17:29:17,384 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.22:8080
+2026-04-15 17:29:17,385 - [33mPress CTRL+C to quit[0m
+2026-04-15 17:29:26,919 - 127.0.0.1 - - [15/Apr/2026 17:29:26] "GET /dashboard HTTP/1.1" 200 -
+2026-04-15 17:29:33,288 - 127.0.0.1 - - [15/Apr/2026 17:29:33] "[32mGET /logout HTTP/1.1[0m" 302 -
+2026-04-15 17:29:33,590 - 127.0.0.1 - - [15/Apr/2026 17:29:33] "GET /admin HTTP/1.1" 200 -
+2026-04-15 17:29:45,685 - 127.0.0.1 - - [15/Apr/2026 17:29:45] "[32mPOST /admin HTTP/1.1[0m" 302 -
+2026-04-15 17:29:45,727 - 127.0.0.1 - - [15/Apr/2026 17:29:45] "GET /dashboard HTTP/1.1" 200 -
+2026-04-15 17:30:06,481 - 127.0.0.1 - - [15/Apr/2026 17:30:06] "[32mGET /logout HTTP/1.1[0m" 302 -
+2026-04-15 17:30:06,790 - 127.0.0.1 - - [15/Apr/2026 17:30:06] "GET /admin HTTP/1.1" 200 -
+2026-04-15 17:30:45,425 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.22:8080
+2026-04-15 17:30:45,425 - [33mPress CTRL+C to quit[0m
+2026-04-15 17:30:49,629 - 127.0.0.1 - - [15/Apr/2026 17:30:49] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2026-04-15 17:30:49,891 - 127.0.0.1 - - [15/Apr/2026 17:30:49] "GET /admin HTTP/1.1" 200 -
+2026-04-15 17:30:58,439 - 127.0.0.1 - - [15/Apr/2026 17:30:58] "[32mPOST /admin HTTP/1.1[0m" 302 -
+2026-04-15 17:30:58,762 - 127.0.0.1 - - [15/Apr/2026 17:30:58] "GET /dashboard HTTP/1.1" 200 -
+2026-04-15 17:31:09,797 - 127.0.0.1 - - [15/Apr/2026 17:31:09] "[32mGET /logout HTTP/1.1[0m" 302 -
+2026-04-15 17:31:10,035 - 127.0.0.1 - - [15/Apr/2026 17:31:10] "GET /admin HTTP/1.1" 200 -
+2026-04-15 17:35:53,571 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.22:8080
+2026-04-15 17:35:53,572 - [33mPress CTRL+C to quit[0m
+2026-04-15 17:36:01,332 - 127.0.0.1 - - [15/Apr/2026 17:36:01] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2026-04-15 17:36:01,581 - 127.0.0.1 - - [15/Apr/2026 17:36:01] "GET /admin HTTP/1.1" 200 -
+2026-04-15 17:36:08,877 - 127.0.0.1 - - [15/Apr/2026 17:36:08] "GET /admin HTTP/1.1" 200 -
+2026-04-15 17:36:16,812 - 127.0.0.1 - - [15/Apr/2026 17:36:16] "[32mPOST /admin HTTP/1.1[0m" 302 -
+2026-04-15 17:36:17,162 - 127.0.0.1 - - [15/Apr/2026 17:36:17] "GET /dashboard HTTP/1.1" 200 -
+2026-04-15 17:36:23,223 - 127.0.0.1 - - [15/Apr/2026 17:36:23] "[32mGET /logout HTTP/1.1[0m" 302 -
+2026-04-15 17:36:23,473 - 127.0.0.1 - - [15/Apr/2026 17:36:23] "GET /admin HTTP/1.1" 200 -
+2026-04-15 17:36:25,475 - 127.0.0.1 - - [15/Apr/2026 17:36:25] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2026-04-15 17:36:25,787 - 127.0.0.1 - - [15/Apr/2026 17:36:25] "GET /admin HTTP/1.1" 200 -
+2026-04-15 17:42:45,418 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.22:8080
+2026-04-15 17:42:45,418 - [33mPress CTRL+C to quit[0m
+2026-04-15 17:42:51,033 - 127.0.0.1 - - [15/Apr/2026 17:42:51] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2026-04-15 17:42:51,314 - 127.0.0.1 - - [15/Apr/2026 17:42:51] "GET /admin HTTP/1.1" 200 -
+2026-04-15 17:42:54,259 - 127.0.0.1 - - [15/Apr/2026 17:42:54] "GET / HTTP/1.1" 200 -
+2026-04-15 17:43:11,664 - 127.0.0.1 - - [15/Apr/2026 17:43:11] "POST / HTTP/1.1" 200 -
+2026-04-15 17:43:19,242 - 127.0.0.1 - - [15/Apr/2026 17:43:19] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2026-04-15 17:43:19,567 - 127.0.0.1 - - [15/Apr/2026 17:43:19] "GET /admin HTTP/1.1" 200 -
+2026-04-15 17:43:35,221 - 127.0.0.1 - - [15/Apr/2026 17:43:35] "[32mPOST /admin HTTP/1.1[0m" 302 -
+2026-04-15 17:43:35,541 - 127.0.0.1 - - [15/Apr/2026 17:43:35] "GET /dashboard HTTP/1.1" 200 -
+2026-04-15 17:48:16,162 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.22:8080
+2026-04-15 17:48:16,162 - [33mPress CTRL+C to quit[0m
+2026-04-15 17:48:21,777 - 127.0.0.1 - - [15/Apr/2026 17:48:21] "GET / HTTP/1.1" 200 -
+2026-04-15 17:48:30,561 - 127.0.0.1 - - [15/Apr/2026 17:48:30] "POST / HTTP/1.1" 200 -
+2026-04-15 17:48:38,518 - 127.0.0.1 - - [15/Apr/2026 17:48:38] "GET /dashboard HTTP/1.1" 200 -
+2026-04-15 18:05:40,382 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.22:8080
+2026-04-15 18:05:40,383 - [33mPress CTRL+C to quit[0m
+2026-04-15 18:09:26,301 - 127.0.0.1 - - [15/Apr/2026 18:09:26] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2026-04-15 18:09:26,569 - 127.0.0.1 - - [15/Apr/2026 18:09:26] "GET /admin HTTP/1.1" 200 -
+2026-04-15 18:10:33,675 - 192.168.56.1 - - [15/Apr/2026 18:10:33] "GET / HTTP/1.1" 200 -
+2026-04-15 18:10:33,781 - 192.168.56.1 - - [15/Apr/2026 18:10:33] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
