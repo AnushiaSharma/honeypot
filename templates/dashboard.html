@@ -1,14 +1,26 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+
     <title>Matrix Honeypot Dashboard</title>
 
+    <!-- AUTO REFRESH -->
+    <script>
+        setTimeout(function () {
+            location.reload();
+        }, 5000);
+    </script>
+
     <style>
+
         body {
             background: black;
             color: #00ff00;
             font-family: "Courier New", monospace;
             margin: 0;
+            overflow-x: hidden;
+            font-size: 14px;
         }
 
         header {
@@ -17,38 +29,80 @@
             font-size: 22px;
             border-bottom: 1px solid #00ff00;
             text-shadow: 0 0 10px #00ff00;
+            position: relative;
+        }
+
+        #clock {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            color: #00ffcc;
+            font-size: 13px;
+        }
+
+        .logout {
+            position: absolute;
+            right: 20px;
+            bottom: 8px;
+        }
+
+        .logout a {
+            color: red;
+            text-decoration: none;
+            font-size: 10px;
+            font-weight: bold;
         }
 
         .container {
             padding: 20px;
         }
 
+        .terminal {
+            margin-bottom: 15px;
+            padding: 12px;
+            border: 1px solid #00ff00;
+            background: rgba(0, 255, 0, 0.05);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .counter {
+            color: #00ffcc;
+            text-shadow: 0 0 8px #00ffcc;
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
+            background: rgba(0, 255, 0, 0.03);
+            font-size: 13px;
         }
 
         th, td {
             padding: 10px;
             border-bottom: 1px solid #003300;
+            text-align: center;
         }
 
         th {
             color: #00ff00;
             text-shadow: 0 0 5px #00ff00;
+            font-size: 13px;
+        }
+
+        td {
+            font-size: 12px;
         }
 
         tr:hover {
-            background-color: rgba(0, 255, 0, 0.1);
+            background-color: rgba(0, 255, 0, 0.08);
         }
 
         .ip {
             color: #00ffcc;
-        }
-
-        .attack {
-            color: red;
-            text-shadow: 0 0 8px red;
         }
 
         .blink {
@@ -56,72 +110,230 @@
         }
 
         @keyframes blink {
-            50% { opacity: 0; }
+            50% { opacity: 0;}
         }
 
-        .terminal {
-            margin-bottom: 15px;
-        }
     </style>
+
+    <!-- LEAFLET MAP -->
+    <link rel="stylesheet"
+        href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
 </head>
 
 <body>
 
-<header>
-    💻 MATRIX HONEYPOT TERMINAL
-    <div style="text-align:right; padding:10px;">
-    <a href="/logout" style="color:red; text-decoration:none;">[ LOGOUT ]</a>
-</div>
-</header>
+    <header>
 
-<div class="container">
+        💻 MATRIX HONEYPOT TERMINAL
 
-    <div class="terminal">
-        > Initializing system... <br>
-        > Monitoring incoming threats... <br>
-        > Status: <span class="blink">ACTIVE</span>
+        <div id="clock"></div>
+
+        <div class="logout">
+            <a href="/logout">[ LOGOUT ]</a>
+        </div>
+
+    </header>
+
+    <div class="container">
+
+        <div class="terminal">
+
+            > Initializing system... <br>
+            > Monitoring incoming threats... <br>
+            > Status:
+            <span class="blink">ACTIVE</span>
+
+            <h2 class="counter">
+                TOTAL ATTACKS DETECTED:
+                {{ total }}
+            </h2>
+
+        </div>
+
+        <!-- ATTACK TABLE -->
+
+        <table>
+
+            <tr>
+                <th>ID</th>
+                <th>IP</th>
+                <th>USERNAME</th>
+                <th>PASSWORD</th>
+                <th>COUNTRY</th>
+                <th>CITY</th>
+                <th>TIME</th>
+            </tr>
+
+            {% for row in data %}
+
+            <tr>
+
+                <td>{{ row[0] }}</td>
+
+                <td class="ip">
+                    {{ row[1] }}
+                </td>
+
+                <td>{{ row[2] }}</td>
+
+                <td>{{ row[3] }}</td>
+
+                <td>{{ row[4] }}</td>
+
+                <td>{{ row[5] }}</td>
+
+                <td>{{ row[8] }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        <br><br>
+
+        <!-- MAP -->
+
+        <h2 style="
+            color:#00ffcc;
+            text-shadow:0 0 10px #00ffcc;
+        ">
+            LIVE ATTACKER MAP
+        </h2>
+
+        <div id="map"
+            style="
+            height:500px;
+            border:1px solid #00ff00;
+            margin-bottom:30px;
+        ">
+        </div>
+
+        <br><br>
+
+        <!-- COMMAND TABLE -->
+
+        <h2 style="
+            color:#ff4444;
+            text-shadow:0 0 10px red;
+        ">
+            LIVE ATTACKER COMMANDS
+        </h2>
+
+        <table>
+
+            <tr>
+                <th>ID</th>
+                <th>IP</th>
+                <th>COMMAND</th>
+                <th>TIME</th>
+            </tr>
+
+            {% for cmd in commands %}
+
+            <tr>
+
+                <td>{{ cmd[0] }}</td>
+
+                <td class="ip">
+                    {{ cmd[1] }}
+                </td>
+
+                <td style="color:#ff4444;">
+                    {{ cmd[2] }}
+                </td>
+
+                <td>{{ cmd[3] }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
     </div>
 
-   <table>
-    <tr>
-        <th>ID</th>
-        <th>IP</th>
-        <th>Username</th>
-        <th>Password</th>
-        <th>Country</th>
-        <th>City</th>
-        <th>Time</th>
-        <th>Status</th>
-    </tr>
+    <!-- LEAFLET SCRIPT -->
 
-    {% for row in data %}
-    <tr>
-        <td>{{ row[0] }}</td>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-        <td class="ip">{{ row[1] }}</td>
+    <script>
+        // CREATE MAP
+        var map = L.map('map').setView(
+            [30.3165, 78.0322],
+            5
+        );
+        
+        // MAP TILES
 
-        <td>{{ row[2] }}</td>
+        L.tileLayer(
+            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            {
+                attribution: 'OpenStreetMap'
+            }
+        ).addTo(map);
 
-        <td style="color:#ff4444;">
-            {{ row[3] }}
-        </td>
+        // ATTACK DATA
 
-        <td>
-            {{ row[4] if row[4] != "Unknown" else "🌐 Hidden" }}
-        </td>
+        var attackData = JSON.parse('{{ data | tojson | safe }}');
 
-        <td>
-            {{ row[5] if row[5] != "Unknown" else "🌐 Hidden" }}
-        </td>
+        // LOOP THROUGH ATTACKS
 
-        <td>{{ row[6] }}</td>
+        attackData.forEach(function(row) {
+            var latitude = parseFloat(row[6]);
+            var longitude = parseFloat(row[7]);
 
-        <td class="attack blink">⚠ BREACH</td>
-    </tr>
-    {% endfor %}
-</table>
+            // VALIDATE COORDINATES
 
-</div>
+            if (
+                !isNaN(latitude)
+                &&
+                !isNaN(longitude)
+                &&
+                latitude !== 0
+                &&
+                longitude !== 0
+            ) {
+                // CREATE MARKER
+                var marker = L.marker(
+                    [latitude, longitude]
+                    ).addTo(map);
+
+                    // POPUP
+                    marker.bindPopup(
+                        "<b>IP:</b> " + row[1] +
+                        "<br><b>Country:</b> " + row[4] +
+                        "<br><b>City:</b> " + row[5]
+
+                    );
+
+            }
+
+        });
+
+</script>
+    </script>
+
+    <!-- LIVE CLOCK -->
+
+    <script>
+
+        function updateClock() {
+
+            const now = new Date();
+
+            document.getElementById("clock").innerHTML =
+                now.toLocaleTimeString();
+
+        }
+
+        setInterval(updateClock, 1000);
+
+        updateClock();
+
+    </script>
 
 </body>
+
 </html>

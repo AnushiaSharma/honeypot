@@ -1,77 +1,638 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Secure Access</title>
 
-    <style>
-        body {
-            background: linear-gradient(135deg, #0f172a, #020617);
-            font-family: Arial, sans-serif;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+<meta charset="UTF-8">
 
-        .box {
-            background: #1e293b;
-            padding: 30px;
-            border-radius: 10px;
-            width: 300px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-            text-align: center;
-        }
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
 
-        h2 {
-            margin-bottom: 20px;
-            color: #38bdf8;
-        }
+<title>Secure Login</title>
 
-        input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 5px;
-        }
+<style>
 
-        button {
-            width: 100%;
-            padding: 10px;
-            background: #0ea5e9;
-            border: none;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:
+    "Segoe UI",
+    sans-serif;
+}
 
-        button:hover {
-            background: #0284c7;
-        }
+body{
 
-        .note {
-            margin-top: 10px;
-            font-size: 12px;
-            color: #94a3b8;
-        }
-    </style>
+    height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:
+    linear-gradient(
+        135deg,
+        #f8fafc,
+        #e2e8f0
+    );
+
+    overflow:hidden;
+
+    position:relative;
+}
+
+/* FLOATING BLOBS */
+
+.blob{
+
+    position:absolute;
+
+    border-radius:50%;
+
+    filter:blur(60px);
+
+    opacity:0.5;
+
+    animation:
+    float 8s infinite ease-in-out;
+}
+
+.blob1{
+
+    width:300px;
+    height:300px;
+
+    background:#93c5fd;
+
+    top:-80px;
+    left:-80px;
+}
+
+.blob2{
+
+    width:250px;
+    height:250px;
+
+    background:#c4b5fd;
+
+    bottom:-60px;
+    right:-60px;
+
+    animation-delay:2s;
+}
+
+@keyframes float{
+
+    50%{
+        transform:
+        translateY(20px)
+        translateX(10px);
+    }
+}
+
+/* LOGIN CARD */
+
+.login-card{
+
+    width:390px;
+
+    background:white;
+
+    padding:40px;
+
+    border-radius:24px;
+
+    box-shadow:
+    0 10px 40px
+    rgba(0,0,0,0.08);
+
+    position:relative;
+
+    z-index:10;
+
+    animation:
+    fadeIn 1s ease;
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:
+        translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:
+        translateY(0);
+    }
+}
+
+.logo{
+
+    width:60px;
+    height:60px;
+
+    border-radius:16px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #3b82f6,
+        #8b5cf6
+    );
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    color:white;
+
+    font-size:26px;
+
+    margin:auto;
+    margin-bottom:20px;
+}
+
+h1{
+
+    text-align:center;
+
+    color:#0f172a;
+
+    font-size:28px;
+
+    margin-bottom:8px;
+}
+
+.subtitle{
+
+    text-align:center;
+
+    color:#64748b;
+
+    margin-bottom:30px;
+
+    font-size:14px;
+}
+
+/* INPUTS */
+
+.input-group{
+
+    margin-bottom:18px;
+}
+
+.input-group label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    color:#334155;
+
+    font-size:14px;
+
+    font-weight:500;
+}
+
+.input-box{
+
+    position:relative;
+}
+
+.input-box input{
+
+    width:100%;
+
+    padding:14px 16px;
+
+    border-radius:14px;
+
+    border:1px solid #cbd5e1;
+
+    background:#f8fafc;
+
+    font-size:15px;
+
+    transition:0.3s;
+}
+
+.input-box input:focus{
+
+    outline:none;
+
+    border-color:#6366f1;
+
+    box-shadow:
+    0 0 0 4px
+    rgba(99,102,241,0.15);
+}
+
+/* OPTIONS */
+
+.options{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:22px;
+
+    font-size:14px;
+}
+
+.options a{
+
+    color:#6366f1;
+
+    text-decoration:none;
+}
+
+/* BUTTON */
+
+button{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #6366f1,
+        #8b5cf6
+    );
+
+    color:white;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 8px 20px
+    rgba(99,102,241,0.3);
+}
+
+/* SOCIAL */
+
+.socials{
+
+    display:flex;
+
+    gap:12px;
+
+    margin-top:22px;
+}
+
+.social-btn{
+
+    flex:1;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    border:1px solid #e2e8f0;
+
+    background:white;
+
+    color:#334155;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+.social-btn:hover{
+
+    background:#f8fafc;
+}
+
+/* MESSAGE BOX */
+
+#message{
+
+    margin-top:18px;
+
+    padding:14px;
+
+    border-radius:14px;
+
+    background:#fef3c7;
+
+    color:#92400e;
+
+    font-size:14px;
+
+    text-align:center;
+}
+
+/* FOOTER */
+
+.footer{
+
+    margin-top:24px;
+
+    text-align:center;
+
+    color:#94a3b8;
+
+    font-size:12px;
+}
+
+</style>
+
 </head>
 
 <body>
 
-<div class="box">
-    <h2>Secure Login</h2>
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
 
-    <form method="POST">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
+<div class="login-card">
 
-        <button type="submit">Login</button>
-    </form>
+    <div class="logo">
+        🔐
+    </div>
 
-    <div class="note">Authorized access only</div>
+    <h1>
+        Welcome Back
+    </h1>
+
+    <div class="subtitle">
+        Sign in to continue securely
+    </div>
+
+    <div id="loginForm">
+
+<form method="POST">
+
+    <div class="input-group">
+
+        <label>
+            Email or Username
+        </label>
+
+        <div class="input-box">
+
+            <input
+            type="text"
+            name="username"
+            placeholder="Enter your email"
+            required
+            >
+
+        </div>
+
+    </div>
+
+    <div class="input-group">
+
+        <label>
+            Password
+        </label>
+
+        <div class="input-box">
+
+            <input
+            type="password"
+            name="password"
+            placeholder="Enter your password"
+            required
+            >
+
+        </div>
+
+    </div>
+
+    <div class="options">
+
+        <label>
+            <input type="checkbox">
+            Remember me
+        </label>
+
+        <a href="#">
+            Forgot Password?
+        </a>
+
+    </div>
+
+    <button type="submit">
+
+        {% if locked %}
+        Account Locked
+        {% else %}
+        Sign In
+        {% endif %}
+
+    </button>
+
+</form>
+
+<div
+style="
+margin-top:18px;
+text-align:center;
+font-size:14px;
+"
+>
+
+    Don't have an account?
+
+    <a
+    href="#"
+    onclick="showSignup()"
+    style="
+    color:#6366f1;
+    text-decoration:none;
+    font-weight:600;
+    "
+    >
+        Create Account
+    </a>
+
 </div>
+
+</div>
+
+<!-- SIGNUP FORM -->
+
+<div
+id="signupForm"
+style="display:none;"
+>
+
+<form method="POST">
+
+    <div class="input-group">
+
+        <label>
+            Full Name
+        </label>
+
+        <div class="input-box">
+
+            <input
+            type="text"
+            name="fullname"
+            placeholder="Enter full name"
+            required
+            >
+
+        </div>
+
+    </div>
+
+    <div class="input-group">
+
+        <label>
+            Email Address
+        </label>
+
+        <div class="input-box">
+
+            <input
+            type="email"
+            name="email"
+            placeholder="Enter email"
+            required
+            >
+
+        </div>
+
+    </div>
+
+    <div class="input-group">
+
+        <label>
+            Create Password
+        </label>
+
+        <div class="input-box">
+
+            <input
+            type="password"
+            name="password"
+            placeholder="Create password"
+            required
+            >
+
+        </div>
+
+    </div>
+
+    <button type="submit">
+
+        Create Account
+
+    </button>
+
+</form>
+
+<div
+
+style="
+margin-top:18px;
+text-align:center;
+font-size:14px;
+"
+>
+
+    Already have an account?
+
+    <a
+    href="#"
+    onclick="showLogin()"
+    style="
+    color:#6366f1;
+    text-decoration:none;
+    font-weight:600;
+    "
+    >
+        Sign In
+    </a>
+
+</div>
+
+</div>
+
+    <div class="socials">
+
+        <button class="social-btn">
+            Google
+        </button>
+
+        <button class="social-btn">
+            Microsoft
+        </button>
+
+    </div>
+
+    {% if error %}
+
+    <div
+    id="message"
+    style="display:block;"
+    >
+
+    {{ error }}
+
+    </div>
+
+    {% endif %}
+
+    <div class="footer">
+
+        Secure Authentication Portal © 2026
+
+    </div>
+
+</div>
+
+<script>
+
+function showSignup(){
+
+    document.getElementById(
+        "loginForm"
+    ).style.display = "none";
+
+    document.getElementById(
+        "signupForm"
+    ).style.display = "block";
+}
+
+function showLogin(){
+
+    document.getElementById(
+        "signupForm"
+    ).style.display = "none";
+
+    document.getElementById(
+        "loginForm"
+    ).style.display = "block";
+}
+
+</script>
 
 </body>
 </html>
