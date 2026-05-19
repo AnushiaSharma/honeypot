@@ -5,6 +5,13 @@
 
     <title>Matrix Honeypot Dashboard</title>
 
+    <!-- GOOGLE FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- LEAFLET -->
+    <link rel="stylesheet"
+        href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
     <!-- AUTO REFRESH -->
     <script>
         setTimeout(function () {
@@ -14,155 +21,694 @@
 
     <style>
 
-        body {
-            background: black;
-            color: #00ff00;
-            font-family: "Courier New", monospace;
-            margin: 0;
-            overflow-x: hidden;
-            font-size: 14px;
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
         }
 
-        header {
-            text-align: center;
-            padding: 15px;
-            font-size: 22px;
-            border-bottom: 1px solid #00ff00;
-            text-shadow: 0 0 10px #00ff00;
-            position: relative;
+        body{
+
+            background:
+            radial-gradient(circle at top left,#dbeafe,#f8fafc 40%),
+            radial-gradient(circle at bottom right,#ede9fe,#f1f5f9 50%);
+
+            font-family:'Poppins',sans-serif;
+
+            color:#1e293b;
+
+            overflow-x:hidden;
+
+            position:relative;
         }
 
-        #clock {
-            position: absolute;
-            right: 20px;
-            top: 15px;
-            color: #00ffcc;
-            font-size: 13px;
+        /* BACKGROUND GRID */
+
+        .bg-grid{
+
+            position:fixed;
+
+            inset:0;
+
+            background-image:
+            linear-gradient(rgba(37,99,235,0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(37,99,235,0.04) 1px, transparent 1px);
+
+            background-size:40px 40px;
+
+            z-index:-3;
         }
 
-        .logout {
-            position: absolute;
-            right: 20px;
-            bottom: 8px;
+        /* FLOATING GLOW */
+
+        body::before{
+
+            content:'';
+
+            position:fixed;
+
+            width:500px;
+            height:500px;
+
+            background:rgba(37,99,235,0.15);
+
+            border-radius:50%;
+
+            top:-150px;
+            left:-150px;
+
+            filter:blur(120px);
+
+            z-index:-2;
+
+            animation:floatGlow 8s ease infinite alternate;
         }
 
-        .logout a {
-            color: red;
-            text-decoration: none;
-            font-size: 10px;
-            font-weight: bold;
+        body::after{
+
+            content:'';
+
+            position:fixed;
+
+            width:400px;
+            height:400px;
+
+            background:rgba(168,85,247,0.12);
+
+            border-radius:50%;
+
+            bottom:-100px;
+            right:-100px;
+
+            filter:blur(120px);
+
+            z-index:-2;
+
+            animation:floatGlow2 10s ease infinite alternate;
         }
 
-        .container {
-            padding: 20px;
+        @keyframes floatGlow{
+
+            from{
+                transform:translateY(0px);
+            }
+
+            to{
+                transform:translateY(40px);
+            }
+
         }
 
-        .terminal {
-            margin-bottom: 15px;
-            padding: 12px;
-            border: 1px solid #00ff00;
-            background: rgba(0, 255, 0, 0.05);
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
-            font-size: 13px;
-            line-height: 1.6;
+        @keyframes floatGlow2{
+
+            from{
+                transform:translateX(0px);
+            }
+
+            to{
+                transform:translateX(-40px);
+            }
+
         }
 
-        .counter {
-            color: #00ffcc;
-            text-shadow: 0 0 8px #00ffcc;
-            margin-top: 10px;
-            font-size: 18px;
+        /* HEADER */
+
+        header{
+
+            background:rgba(255,255,255,0.7);
+
+            backdrop-filter:blur(18px);
+
+            border-bottom:1px solid rgba(255,255,255,0.3);
+
+            padding:20px 35px;
+
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+
+            position:sticky;
+
+            top:0;
+
+            z-index:100;
+
+            box-shadow:0 8px 32px rgba(0,0,0,0.08);
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: rgba(0, 255, 0, 0.03);
-            font-size: 13px;
+        .logo{
+
+            font-size:26px;
+            font-weight:700;
+
+            background:linear-gradient(
+            90deg,
+            #2563eb,
+            #7c3aed,
+            #06b6d4
+            );
+
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+
+            animation:gradientMove 5s linear infinite;
         }
 
-        th, td {
-            padding: 10px;
-            border-bottom: 1px solid #003300;
-            text-align: center;
+        @keyframes gradientMove{
+
+            0%{
+                filter:hue-rotate(0deg);
+            }
+
+            100%{
+                filter:hue-rotate(360deg);
+            }
+
         }
 
-        th {
-            color: #00ff00;
-            text-shadow: 0 0 5px #00ff00;
-            font-size: 13px;
+        .top-right{
+
+            display:flex;
+            align-items:center;
+            gap:20px;
         }
 
-        td {
-            font-size: 12px;
+        #clock{
+
+            color:#475569;
+
+            font-size:14px;
+
+            font-weight:500;
         }
 
-        tr:hover {
-            background-color: rgba(0, 255, 0, 0.08);
+        .top-right a{
+
+            background:linear-gradient(
+            135deg,
+            #ef4444,
+            #dc2626
+            );
+
+            color:white;
+
+            text-decoration:none;
+
+            padding:10px 18px;
+
+            border-radius:12px;
+
+            font-size:13px;
+
+            font-weight:600;
+
+            transition:0.3s;
+
+            box-shadow:0 6px 18px rgba(239,68,68,0.3);
         }
 
-        .ip {
-            color: #00ffcc;
+        .top-right a:hover{
+
+            transform:translateY(-2px);
+
+            box-shadow:0 10px 25px rgba(239,68,68,0.4);
         }
 
-        .blink {
-            animation: blink 1s infinite;
+        /* MAIN */
+
+        .main-container{
+
+            padding:30px;
         }
 
-        @keyframes blink {
-            50% { opacity: 0;}
+        /* STATS */
+
+        .stats-grid{
+
+            display:grid;
+
+            grid-template-columns:
+            repeat(auto-fit,minmax(220px,1fr));
+
+            gap:22px;
+
+            margin-bottom:30px;
+        }
+
+        .card{
+
+            position:relative;
+
+            background:rgba(255,255,255,0.72);
+
+            backdrop-filter:blur(20px);
+
+            border:1px solid rgba(255,255,255,0.4);
+
+            border-radius:24px;
+
+            padding:28px;
+
+            overflow:hidden;
+
+            box-shadow:
+            0 8px 32px rgba(0,0,0,0.08);
+
+            transition:0.4s;
+
+            animation:fadeUp 0.7s ease;
+        }
+
+        .card::before{
+
+            content:'';
+
+            position:absolute;
+
+            width:100%;
+            height:4px;
+
+            background:linear-gradient(
+            90deg,
+            #2563eb,
+            #7c3aed,
+            #06b6d4
+            );
+
+            top:0;
+            left:0;
+        }
+
+        .card:hover{
+
+            transform:
+            translateY(-8px)
+            scale(1.02);
+
+            box-shadow:
+            0 15px 40px rgba(37,99,235,0.15);
+        }
+
+        .card h3{
+
+            font-size:15px;
+
+            color:#64748b;
+
+            margin-bottom:14px;
+        }
+
+        .number{
+
+            font-size:34px;
+
+            font-weight:700;
+
+            color:#2563eb;
+        }
+
+        .active{
+
+            display:inline-block;
+
+            background:#dcfce7;
+
+            color:#16a34a;
+
+            padding:10px 18px;
+
+            border-radius:30px;
+
+            font-weight:600;
+        }
+
+        /* SECTION */
+
+        .section{
+
+            background:rgba(255,255,255,0.75);
+
+            backdrop-filter:blur(18px);
+
+            border-radius:24px;
+
+            padding:25px;
+
+            margin-bottom:30px;
+
+            box-shadow:
+            0 8px 30px rgba(0,0,0,0.08);
+
+            animation:fadeUp 0.7s ease;
+        }
+
+        .section-title{
+
+            font-size:22px;
+
+            font-weight:600;
+
+            margin-bottom:22px;
+
+            color:#0f172a;
+        }
+
+        /* TABLE */
+
+        table{
+
+            width:100%;
+
+            border-collapse:collapse;
+
+            overflow:hidden;
+        }
+
+        th{
+
+            background:linear-gradient(
+            90deg,
+            #2563eb,
+            #3b82f6
+            );
+
+            color:white;
+
+            padding:16px;
+
+            font-size:14px;
+
+            text-align:center;
+        }
+
+        td{
+
+            padding:15px;
+
+            border-bottom:1px solid #e2e8f0;
+
+            text-align:center;
+
+            font-size:13px;
+
+            color:#334155;
+        }
+
+        tr{
+
+            transition:0.3s;
+
+            animation:slideIn 0.4s ease;
+        }
+
+        tr:hover{
+
+            background:#f8fafc;
+
+            transform:scale(1.005);
+        }
+
+        .ip{
+
+            color:#2563eb;
+
+            font-weight:600;
+        }
+
+        .danger{
+
+            background:#fee2e2;
+
+            color:#dc2626;
+
+            padding:7px 14px;
+
+            border-radius:20px;
+
+            font-size:12px;
+
+            font-weight:600;
+        }
+
+        /* MAP */
+
+        .map-wrapper{
+
+            position:relative;
+
+            overflow:hidden;
+
+            border-radius:24px;
+
+            box-shadow:
+            0 12px 35px rgba(0,0,0,0.12);
+        }
+
+        #map{
+
+            height:500px;
+
+            filter:
+            saturate(1.1)
+            contrast(1.02);
+        }
+
+        .map-overlay{
+
+            position:absolute;
+
+            top:15px;
+            left:15px;
+
+            z-index:999;
+
+            background:rgba(255,255,255,0.85);
+
+            backdrop-filter:blur(10px);
+
+            padding:10px 18px;
+
+            border-radius:14px;
+
+            font-size:13px;
+
+            font-weight:600;
+
+            color:#2563eb;
+
+            box-shadow:
+            0 4px 18px rgba(0,0,0,0.08);
+        }
+
+        /* CUSTOM MARKERS */
+
+        .custom-marker .pulse{
+
+            width:18px;
+            height:18px;
+
+            background:#ef4444;
+
+            border-radius:50%;
+
+            position:relative;
+
+            animation:pulse 1.5s infinite;
+        }
+
+        .custom-marker .pulse::after{
+
+            content:'';
+
+            position:absolute;
+
+            width:100%;
+            height:100%;
+
+            border-radius:50%;
+
+            background:rgba(239,68,68,0.5);
+
+            animation:ring 1.5s infinite;
+        }
+
+        @keyframes pulse{
+
+            0%{
+                transform:scale(1);
+            }
+
+            50%{
+                transform:scale(1.2);
+            }
+
+            100%{
+                transform:scale(1);
+            }
+
+        }
+
+        @keyframes ring{
+
+            0%{
+                transform:scale(1);
+                opacity:1;
+            }
+
+            100%{
+                transform:scale(2.5);
+                opacity:0;
+            }
+
+        }
+
+        /* ANIMATIONS */
+
+        @keyframes fadeUp{
+
+            from{
+                opacity:0;
+                transform:translateY(12px);
+            }
+
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+
+        }
+
+        @keyframes slideIn{
+
+            from{
+                opacity:0;
+                transform:translateX(-10px);
+            }
+
+            to{
+                opacity:1;
+                transform:translateX(0);
+            }
+
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width:768px){
+
+            header{
+
+                flex-direction:column;
+
+                gap:12px;
+            }
+
+            .top-right{
+
+                flex-direction:column;
+            }
+
+            .main-container{
+
+                padding:15px;
+            }
+
         }
 
     </style>
-
-    <!-- LEAFLET MAP -->
-    <link rel="stylesheet"
-        href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
 </head>
 
 <body>
 
-    <header>
+<div class="bg-grid"></div>
 
-        💻 MATRIX HONEYPOT TERMINAL
+<header>
+
+    <div class="logo">
+        Matrix Honeypot Dashboard
+    </div>
+
+    <div class="top-right">
 
         <div id="clock"></div>
 
-        <div class="logout">
-            <a href="/logout">[ LOGOUT ]</a>
-        </div>
+        <a href="/logout">
+            Logout
+        </a>
 
-    </header>
+    </div>
 
-    <div class="container">
+</header>
 
-        <div class="terminal">
+<div class="main-container">
 
-            > Initializing system... <br>
-            > Monitoring incoming threats... <br>
-            > Status:
-            <span class="blink">ACTIVE</span>
+    <!-- STATS -->
 
-            <h2 class="counter">
-                TOTAL ATTACKS DETECTED:
+    <div class="stats-grid">
+
+        <div class="card">
+
+            <h3>Total Attacks</h3>
+
+            <div class="number">
                 {{ total }}
-            </h2>
+            </div>
 
         </div>
 
-        <!-- ATTACK TABLE -->
+        <div class="card">
+
+            <h3>Commands Logged</h3>
+
+            <div class="number">
+                {{ commands|length }}
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Threat Status</h3>
+
+            <div class="active">
+                ACTIVE
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h3>System</h3>
+
+            <div class="number">
+                ONLINE
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- LOGIN TABLE -->
+
+    <div class="section">
+
+        <div class="section-title">
+            Recent Login Attempts
+        </div>
 
         <table>
 
             <tr>
+
                 <th>ID</th>
                 <th>IP</th>
-                <th>USERNAME</th>
-                <th>PASSWORD</th>
-                <th>COUNTRY</th>
-                <th>CITY</th>
-                <th>TIME</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Country</th>
+                <th>City</th>
+                <th>Time</th>
+
             </tr>
 
             {% for row in data %}
@@ -191,43 +737,45 @@
 
         </table>
 
-        <br><br>
+    </div>
 
-        <!-- MAP -->
+    <!-- MAP -->
 
-        <h2 style="
-            color:#00ffcc;
-            text-shadow:0 0 10px #00ffcc;
-        ">
-            LIVE ATTACKER MAP
-        </h2>
+    <div class="section">
 
-        <div id="map"
-            style="
-            height:500px;
-            border:1px solid #00ff00;
-            margin-bottom:30px;
-        ">
+        <div class="section-title">
+            Live Threat Map
         </div>
 
-        <br><br>
+        <div class="map-wrapper">
 
-        <!-- COMMAND TABLE -->
+            <div class="map-overlay">
+                LIVE GLOBAL THREAT TRACKING
+            </div>
 
-        <h2 style="
-            color:#ff4444;
-            text-shadow:0 0 10px red;
-        ">
-            LIVE ATTACKER COMMANDS
-        </h2>
+            <div id="map"></div>
+
+        </div>
+
+    </div>
+
+    <!-- COMMANDS -->
+
+    <div class="section">
+
+        <div class="section-title">
+            Live Attacker Commands
+        </div>
 
         <table>
 
             <tr>
+
                 <th>ID</th>
                 <th>IP</th>
-                <th>COMMAND</th>
-                <th>TIME</th>
+                <th>Command</th>
+                <th>Time</th>
+
             </tr>
 
             {% for cmd in commands %}
@@ -240,8 +788,10 @@
                     {{ cmd[1] }}
                 </td>
 
-                <td style="color:#ff4444;">
-                    {{ cmd[2] }}
+                <td>
+                    <span class="danger">
+                        {{ cmd[2] }}
+                    </span>
                 </td>
 
                 <td>{{ cmd[3] }}</td>
@@ -254,85 +804,76 @@
 
     </div>
 
-    <!-- LEAFLET SCRIPT -->
+</div>
 
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<!-- MAP -->
 
-    <script>
-        // CREATE MAP
-        var map = L.map('map').setView(
-            [30.3165, 78.0322],
-            5
-        );
-        
-        // MAP TILES
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-        L.tileLayer(
-            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            {
-                attribution: 'OpenStreetMap'
-            }
-        ).addTo(map);
+<script>
 
-        // ATTACK DATA
+var map = L.map('map').setView([20, 0], 2);
 
-        var attackData = JSON.parse('{{ data | tojson | safe }}');
+L.tileLayer(
+'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+{
+    attribution:'OpenStreetMap'
+}
+).addTo(map);
 
-        // LOOP THROUGH ATTACKS
+var customIcon = L.divIcon({
+    className: 'custom-marker',
+    html: `<div class="pulse"></div>`,
+    iconSize:[20,20]
+});
 
-        attackData.forEach(function(row) {
-            var latitude = parseFloat(row[6]);
-            var longitude = parseFloat(row[7]);
+{% for row in data %}
 
-            // VALIDATE COORDINATES
+{% if row[6] and row[7] %}
 
-            if (
-                !isNaN(latitude)
-                &&
-                !isNaN(longitude)
-                &&
-                latitude !== 0
-                &&
-                longitude !== 0
-            ) {
-                // CREATE MARKER
-                var marker = L.marker(
-                    [latitude, longitude]
-                    ).addTo(map);
+L.marker(
+[
+    {{ row[6] }},
+    {{ row[7] }}
+],
+{
+    icon: customIcon
+}
+).addTo(map)
 
-                    // POPUP
-                    marker.bindPopup(
-                        "<b>IP:</b> " + row[1] +
-                        "<br><b>Country:</b> " + row[4] +
-                        "<br><b>City:</b> " + row[5]
+.bindPopup(
+`
+<b>IP:</b> {{ row[1] }}<br>
+<b>Country:</b> {{ row[4] }}<br>
+<b>City:</b> {{ row[5] }}
+`
+);
 
-                    );
+{% endif %}
 
-            }
-
-        });
+{% endfor %}
 
 </script>
-    </script>
 
-    <!-- LIVE CLOCK -->
+<!-- CLOCK -->
 
-    <script>
+<script>
 
-        function updateClock() {
+function updateClock(){
 
-            const now = new Date();
+    const now = new Date();
 
-            document.getElementById("clock").innerHTML =
-                now.toLocaleTimeString();
+    document.getElementById(
+        "clock"
+    ).innerHTML =
+    now.toLocaleTimeString();
+}
 
-        }
+setInterval(updateClock,1000);
 
-        setInterval(updateClock, 1000);
+updateClock();
 
-        updateClock();
-
-    </script>
+</script>
 
 </body>
 
