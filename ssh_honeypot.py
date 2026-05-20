@@ -137,7 +137,12 @@ def start_honeypot():
 
             elif command == "clear":
 
-                client.send(b"\033c")
+                client.send(
+                    b"\n"*40
+                    )
+                client.send(
+                    b"Recovery Terminal Active\n"
+                )
 
             elif command.startswith("cat "):
 

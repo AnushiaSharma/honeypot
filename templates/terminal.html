@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Developer Console</title>
+
+    <style>
+
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:Consolas,monospace;
+    }
+
+    body{
+
+        background:#0f172a;
+
+        color:#e2e8f0;
+
+        height:100vh;
+
+        overflow:hidden;
+    }
+
+    .topbar{
+
+        height:50px;
+
+        background:#111827;
+
+        display:flex;
+
+        align-items:center;
+
+        padding:0 20px;
+
+        border-bottom:1px solid #1e293b;
+    }
+
+    .dot{
+
+        width:12px;
+        height:12px;
+
+        border-radius:50%;
+
+        margin-right:8px;
+    }
+
+    .red{
+        background:#ef4444;
+    }
+
+    .yellow{
+        background:#f59e0b;
+    }
+
+    .green{
+        background:#22c55e;
+    }
+
+    .title{
+
+        margin-left:15px;
+
+        color:#94a3b8;
+
+        font-size:14px;
+    }
+
+    .terminal{
+
+        padding:20px;
+
+        height:calc(100vh - 50px);
+
+        overflow-y:auto;
+    }
+
+    .line{
+
+        margin-bottom:10px;
+
+        line-height:1.6;
+    }
+
+    .prompt{
+
+        color:#22c55e;
+    }
+
+    input{
+
+        background:none;
+
+        border:none;
+
+        outline:none;
+
+        color:white;
+
+        font-size:16px;
+
+        width:80%;
+    }
+
+    .command{
+
+        color:#38bdf8;
+    }
+
+    .output{
+
+        color:#cbd5e1;
+
+        margin-left:20px;
+
+        white-space:pre-line;
+    }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="topbar">
+
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+
+    <div class="title">
+        root@prod-server
+    </div>
+
+</div>
+
+<div
+class="terminal"
+id="terminal"
+>
+
+    <div class="line">
+        Welcome to Ubuntu 22.04 LTS
+    </div>
+
+    <div class="line">
+        Last login: root from 192.168.1.10
+    </div>
+
+    <div class="line">
+
+        <span class="prompt">
+            root@server:~$
+        </span>
+
+        <input
+        type="text"
+        id="commandInput"
+        autofocus
+        >
+
+    </div>
+
+</div>
+
+<script>
+
+const input =
+document.getElementById(
+    "commandInput"
+);
+
+const terminal =
+document.getElementById(
+    "terminal"
+);
+
+function createInputLine(){
+
+    const line =
+    document.createElement("div");
+
+    line.className = "line";
+
+    line.innerHTML = `
+        <span class="prompt">
+            root@server:~$
+        </span>
+
+        <input
+        type="text"
+        class="cmd-input"
+        autofocus
+        >
+    `;
+
+    terminal.appendChild(line);
+
+    const newInput =
+    line.querySelector("input");
+
+    newInput.focus();
+
+    newInput.addEventListener(
+        "keydown",
+
+        async function(e){
+
+            if(e.key === "Enter"){
+
+                const cmd =
+                newInput.value.trim();
+
+                // DISABLE OLD INPUT
+
+                newInput.disabled = true;
+
+                // SEND TO BACKEND
+
+                const response =
+                await fetch(
+                    "/execute",
+                    {
+                        method:"POST",
+
+                        headers:{
+                            "Content-Type":
+                            "application/x-www-form-urlencoded"
+                        },
+
+                        body:
+                        "command=" +
+                        encodeURIComponent(cmd)
+                    }
+                );
+
+                const result =
+                await response.text();
+
+                // HANDLE CLEAR
+
+                if(result === "__CLEAR__"){
+
+                    terminal.innerHTML = `
+                        <div class="line">
+                            Welcome to Ubuntu 22.04 LTS
+                        </div>
+
+                        <div class="line">
+                            Last login:
+                            root from 192.168.1.10
+                        </div>
+                    `;
+
+                    createInputLine();
+
+                    return;
+                }
+
+                // SHOW OUTPUT
+
+                if(result){
+
+                    const output =
+                    document.createElement("div");
+
+                    output.className =
+                    "output";
+
+                    output.innerText =
+                    result;
+
+                    terminal.appendChild(output);
+                }
+
+                // EXIT COMMAND
+
+                if(cmd === "exit"){
+
+                    setTimeout(() => {
+
+                        window.location.href = "/";
+
+                    }, 1000);
+
+                    return;
+                }
+
+                // NEW INPUT LINE
+
+                createInputLine();
+
+                terminal.scrollTop =
+                terminal.scrollHeight;
+            }
+        }
+    );
+}
+
+createInputLine();
+
+</script>
+
+</body>
+</html>

@@ -48,9 +48,19 @@ def index():
 
         password = request.form.get('password')
 
+        if not username:
+            username = request.form.get('email')
+
         ip = request.remote_addr
 
-        # TRACK ATTEMPTS
+        # STORE ATTEMPTS PER USER
+
+        stored_user = session.get('user')
+
+        if stored_user != username:
+
+            session['attempts'] = 0
+            session['user'] = username
 
         attempts = session.get('attempts', 0)
 
@@ -81,35 +91,43 @@ def index():
             current_time
         )
 
-        # ATTEMPT LOGIC
+        # LOCK ACCOUNT
 
         if attempts >= 3:
 
             return render_template(
+
                 'login.html',
+
                 error="""
                 Account temporarily locked.
-                Please contact administrator.
+                Too many failed attempts.
                 """,
-                locked=True
+
+                locked=True,
+
+                username=username
             )
 
         remaining = 3 - attempts
 
         return render_template(
+
             'login.html',
+
             error=f"""
             Incorrect credentials.
             {remaining} attempt(s) remaining.
-            """
+            """,
+
+            locked=False,
+
+            username=username
         )
 
-    # RESET SESSION ON FRESH VISIT
-
-    session['attempts'] = 0
-
     return render_template(
-        'login.html'
+        'login.html',
+        locked=False
     )
 
 # ADMIN LOGIN
@@ -146,6 +164,107 @@ def admin_login():
     return render_template(
         'admin_login.html'
     )
+
+@app.route('/terminal')
+def terminal():
+
+    attempts = session.get(
+        'attempts',
+        0
+    )
+
+    # BLOCK DIRECT ACCESS
+
+    if attempts < 3:
+
+        return redirect('/')
+
+    return render_template(
+        'terminal.html'
+    )
+
+@app.route('/execute', methods=['POST'])
+def execute():
+
+    command = request.form.get(
+        'command'
+    )
+
+    ip = request.remote_addr
+
+    current_time = datetime.now().strftime(
+        "%Y-%m-%d %H:%M:%S"
+    )
+
+    from database import insert_command
+
+    insert_command(
+        ip,
+        command,
+        current_time
+    )
+
+    # FAKE RESPONSES
+
+    fake_files = {
+
+        "passwords.txt":
+        "admin:admin123\nroot:toor",
+
+        "secret.txt":
+        "Top Secret Internal Data",
+
+        "config.txt":
+        "Server Configuration Loaded"
+    }
+
+    if command == "help":
+
+        return """
+        Commands:
+        ls
+        pwd
+        whoami
+        cat
+        clear
+        exit
+        """
+
+    elif command == "ls":
+
+        return """
+    passwords.txt
+    secret.txt
+    config.txt
+    """
+
+    elif command == "pwd":
+
+        return "/root"
+
+    elif command == "whoami":
+
+        return "root"
+
+    elif command.startswith("cat "):
+
+        filename = command.split(" ")[1]
+
+        if filename in fake_files:
+
+            return fake_files[filename]
+
+        return "File not found"
+
+    elif command == "clear":
+
+        return "__CLEAR__"
+
+    elif command == "exit":
+
+        return "Session terminated..."
+
+    return "Command not found"
 
 # DASHBOARD
 
@@ -219,6 +338,8 @@ def dashboard():
 
     return response
 
+
+
 # LOGOUT
 
 @app.route('/logout')
@@ -234,5 +355,7 @@ def start_web():
 
     app.run(
         host='0.0.0.0',
-        port=8080
+        port=8080,
+        debug=True,
+        use_reloader=False
     )
